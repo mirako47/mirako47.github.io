@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Blog — BakeryStore</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Arima:wght@700&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--amber:#F5B642;--dark:#2D1200;--dark-btn:#3A1800;--white:#fff;--light:#fdf8f2;--gray:#f4f1ec;--text-muted:#7a6650}
+    body{font-family:'Poppins',sans-serif;background:#ede9e3}
+
+    /* ── NAV ── */
+    .top-bar{background:var(--amber);border-radius:20px;max-width:1100px;margin:24px auto 0;overflow:hidden}
+    nav{display:flex;align-items:center;gap:12px;padding:18px 44px;flex-wrap:wrap}
+    .logo{display:flex;align-items:center;gap:8px;margin-right:auto;text-decoration:none;color:var(--dark)}
+    .logo-icon{width:34px;height:34px}
+    .logo-text{font-size:17px;color:var(--dark);line-height:1}
+    .logo-text strong{font-weight:700}.logo-text span{font-weight:400}
+    .btn-order-nav{background:var(--dark-btn);color:#fff;border:none;border-radius:50px;padding:9px 22px;font-family:'Poppins',sans-serif;font-size:14px;font-weight:500;cursor:pointer}
+    .btn-home-nav{background:transparent;color:var(--dark);border:2px solid var(--dark);border-radius:50px;padding:7px 20px;font-family:'Poppins',sans-serif;font-size:14px;font-weight:500;text-decoration:none;white-space:nowrap}
+    .nav-hamburger{display:none;background:none;border:none;font-size:24px;cursor:pointer;color:var(--dark);padding:4px}
+    .nav-links{display:flex;gap:28px;list-style:none}
+    .nav-links a{text-decoration:none;color:var(--dark);font-size:14px;font-weight:500}
+    .nav-links a.active{font-weight:700;border-bottom:2px solid var(--dark);padding-bottom:2px}
+
+    /* ── PAGE HERO ── */
+    .page-hero{padding:48px 60px 44px;text-align:center}
+    .page-hero-tag{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--dark-btn);opacity:.6;margin-bottom:12px}
+    .page-hero-title{font-family:'Arima',cursive;font-size:60px;font-weight:700;color:var(--dark);line-height:1.05;margin-bottom:14px}
+    .page-hero-desc{font-size:14px;color:var(--dark);line-height:1.75;opacity:.75;max-width:420px;margin:0 auto}
+
+    /* ── SECTIONS ── */
+    .sections-wrap{max-width:1100px;margin:0 auto;padding:0 0 60px}
+    .section-tag{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:10px}
+    .section-title{font-family:'Arima',cursive;font-size:36px;font-weight:700;color:var(--dark);margin-bottom:12px;line-height:1.15}
+
+    /* ── FEATURED ARTICLE ── */
+    .featured-section{background:var(--white);border-radius:20px;margin-top:32px;overflow:hidden}
+    .featured-inner{display:grid;grid-template-columns:1fr 1fr;min-height:420px}
+    .featured-img{background:var(--dark-btn);display:flex;align-items:center;justify-content:center;font-size:100px;position:relative}
+    .featured-img-label{position:absolute;top:20px;left:20px;background:var(--amber);color:var(--dark);font-size:12px;font-weight:700;padding:5px 14px;border-radius:50px;letter-spacing:1px;text-transform:uppercase}
+    .featured-content{padding:52px 48px;display:flex;flex-direction:column;justify-content:center}
+    .article-meta{display:flex;align-items:center;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+    .article-cat{background:var(--amber);color:var(--dark);font-size:11px;font-weight:700;padding:4px 12px;border-radius:50px;text-transform:uppercase;letter-spacing:.5px}
+    .article-date{font-size:12px;color:var(--text-muted)}
+    .article-read{font-size:12px;color:var(--text-muted)}
+    .featured-content h2{font-family:'Arima',cursive;font-size:34px;font-weight:700;color:var(--dark);line-height:1.15;margin-bottom:16px}
+    .featured-content p{font-size:13.5px;color:var(--text-muted);line-height:1.8;margin-bottom:28px}
+    .author-row{display:flex;align-items:center;gap:12px;margin-bottom:28px}
+    .author-ava{width:38px;height:38px;border-radius:50%;background:var(--amber);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;color:var(--dark-btn);flex-shrink:0}
+    .author-info strong{display:block;font-size:13px;color:var(--dark);font-weight:600}
+    .author-info span{font-size:12px;color:var(--text-muted)}
+    .btn-read{display:inline-flex;align-items:center;gap:8px;background:var(--dark-btn);color:#fff;border:none;border-radius:50px;padding:12px 28px;font-family:'Poppins',sans-serif;font-size:14px;font-weight:500;cursor:pointer;text-decoration:none;transition:background .2s}
+    .btn-read:hover{background:var(--amber);color:var(--dark)}
+
+    /* ── BLOG GRID ── */
+    .blog-section{background:var(--light);border-radius:20px;margin-top:24px;padding:60px}
+    .blog-header{margin-bottom:40px}
+    .blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+    .blog-card{background:var(--white);border-radius:16px;overflow:hidden;transition:transform .2s,box-shadow .2s;cursor:pointer}
+    .blog-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(61,26,0,.1)}
+    .blog-card-img{height:180px;display:flex;align-items:center;justify-content:center;font-size:56px;position:relative}
+    .blog-card-img.bg1{background:#fde8b8}
+    .blog-card-img.bg2{background:#daf0e8}
+    .blog-card-img.bg3{background:#f0daf5}
+    .blog-cat{position:absolute;top:14px;left:14px;background:var(--amber);color:var(--dark);font-size:11px;font-weight:700;padding:4px 12px;border-radius:50px;text-transform:uppercase}
+    .blog-card-body{padding:20px 22px 24px}
+    .blog-card-meta{display:flex;gap:12px;font-size:12px;color:var(--text-muted);margin-bottom:10px;flex-wrap:wrap}
+    .blog-card-body h3{font-family:'Arima',cursive;font-size:20px;font-weight:700;color:var(--dark);margin-bottom:8px;line-height:1.2}
+    .blog-card-body p{font-size:13px;color:var(--text-muted);line-height:1.65;margin-bottom:16px}
+    .blog-card-footer{display:flex;justify-content:space-between;align-items:center}
+    .blog-author{display:flex;align-items:center;gap:8px}
+    .blog-author-ava{width:28px;height:28px;border-radius:50%;background:var(--amber);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--dark-btn)}
+    .blog-author span{font-size:12px;color:var(--dark);font-weight:500}
+    .btn-read-sm{font-size:12px;color:var(--amber);font-weight:600;text-decoration:none;background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:4px}
+
+    /* ── ARTICLE MODAL ── */
+    .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1000;align-items:center;justify-content:center;padding:20px}
+    .modal-overlay.open{display:flex}
+    .modal{background:var(--white);border-radius:20px;max-width:720px;width:100%;max-height:88vh;overflow-y:auto;position:relative}
+    .modal-close{position:sticky;top:0;background:var(--white);padding:16px 24px 0;display:flex;justify-content:flex-end;z-index:1}
+    .modal-close button{background:var(--gray);border:none;border-radius:50%;width:34px;height:34px;font-size:18px;cursor:pointer;color:var(--dark);display:flex;align-items:center;justify-content:center}
+    .modal-img{height:240px;display:flex;align-items:center;justify-content:center;font-size:72px;margin:0 24px;border-radius:16px}
+    .modal-img.bg1{background:#fde8b8}
+    .modal-img.bg2{background:#daf0e8}
+    .modal-img.bg3{background:#f0daf5}
+    .modal-body{padding:28px 36px 40px}
+    .modal-body .article-meta{margin-bottom:14px}
+    .modal-body h2{font-family:'Arima',cursive;font-size:32px;font-weight:700;color:var(--dark);margin-bottom:16px;line-height:1.15}
+    .modal-body .author-row{margin-bottom:24px}
+    .modal-body p{font-size:14px;color:var(--text-muted);line-height:1.85;margin-bottom:16px}
+    .modal-body h3{font-family:'Arima',cursive;font-size:22px;font-weight:700;color:var(--dark);margin:28px 0 12px}
+
+    /* ── NEWSLETTER ── */
+    .newsletter-section{background:var(--dark-btn);border-radius:20px;margin-top:24px;padding:56px 60px;text-align:center}
+    .newsletter-section h2{font-family:'Arima',cursive;font-size:36px;font-weight:700;color:#fff;margin-bottom:10px}
+    .newsletter-section p{font-size:14px;color:rgba(255,255,255,.6);margin-bottom:28px}
+    .newsletter-form{display:flex;gap:12px;max-width:460px;margin:0 auto;flex-wrap:wrap}
+    .newsletter-form input{flex:1;padding:13px 18px;border-radius:50px;border:none;font-family:'Poppins',sans-serif;font-size:14px;color:var(--dark);outline:none;min-width:200px}
+    .newsletter-form button{background:var(--amber);color:var(--dark);border:none;border-radius:50px;padding:13px 28px;font-family:'Poppins',sans-serif;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap}
+
+    /* ── FOOTER ── */
+    .footer{background:var(--dark-btn);border-radius:20px;margin-top:24px;padding:52px 60px 32px}
+    .footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:36px;padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,.1)}
+    .footer-brand .logo-text{color:#fff}
+    .footer-brand>p{font-size:13px;color:rgba(255,255,255,.55);line-height:1.7;margin:14px 0 22px}
+    .footer-social{display:flex;gap:10px}
+    .footer-social-icon{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s}
+    .footer-social-icon:hover{background:var(--amber)}
+    .footer-social-icon svg{width:15px;height:15px;fill:#fff}
+    .footer-col h5{font-size:14px;font-weight:700;color:#fff;margin-bottom:18px}
+    .footer-col ul{list-style:none}
+    .footer-col ul li{margin-bottom:10px}
+    .footer-col ul li a{text-decoration:none;font-size:13px;color:rgba(255,255,255,.55);transition:color .2s}
+    .footer-col ul li a:hover{color:var(--amber)}
+    .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:24px;flex-wrap:wrap;gap:8px}
+    .footer-bottom p{font-size:12px;color:rgba(255,255,255,.35)}
+    .footer-bottom a{color:var(--amber);text-decoration:none}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:768px){
+      nav{padding:16px 20px}
+      .nav-hamburger{display:block}
+      .nav-links{display:none;flex-direction:column;gap:0;width:100%;background:var(--amber);border-top:1px solid rgba(61,26,0,.15);padding:10px 0 4px;order:10}
+      .nav-links.open{display:flex}
+      .nav-links li a{display:block;padding:10px 20px;font-size:15px}
+      .page-hero{padding:32px 24px 28px}
+      .page-hero-title{font-size:40px}
+      .featured-inner{grid-template-columns:1fr}
+      .featured-img{height:200px;font-size:72px}
+      .featured-content{padding:32px 28px}
+      .featured-content h2{font-size:26px}
+      .blog-section{padding:36px 20px}
+      .blog-grid{grid-template-columns:1fr 1fr;gap:16px}
+      .newsletter-section{padding:40px 24px}
+      .footer{padding:36px 24px 24px}
+      .footer-top{grid-template-columns:1fr 1fr;gap:24px}
+    }
+    @media(max-width:480px){
+      .page-hero-title{font-size:32px}
+      .blog-grid{grid-template-columns:1fr}
+      .footer-top{grid-template-columns:1fr}
+      .modal-body{padding:20px 20px 32px}
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <nav>
+    <a class="logo" href="bakery-landing.html">
+      <svg class="logo-icon" viewBox="0 0 40 40" fill="none">
+        <circle cx="13" cy="16" r="7" fill="#3A1800"/><circle cx="20" cy="12" r="8" fill="#3A1800"/>
+        <circle cx="27" cy="16" r="7" fill="#3A1800"/><rect x="10" y="21" width="20" height="8" rx="1.5" fill="#3A1800"/>
+        <circle cx="13" cy="16" r="5.5" fill="#F5B642"/><circle cx="20" cy="12" r="6.5" fill="#F5B642"/>
+        <circle cx="27" cy="16" r="5.5" fill="#F5B642"/><rect x="11" y="22" width="18" height="6" rx="1" fill="#F0A030"/>
+        <rect x="16" y="28" width="8" height="2.5" rx="1" fill="#3A1800"/>
+      </svg>
+      <span class="logo-text"><strong>Bakery</strong><span>Store</span></span>
+    </a>
+    <button class="btn-order-nav">Order Now</button>
+    <a href="index.html" class="btn-home-nav">Home</a>
+    <button class="nav-hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')">&#9776;</button>
+    <ul class="nav-links" id="main-nav">
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="blog.html" class="active">Blog</a></li>
+    </ul>
+  </nav>
+  <div class="page-hero">
+    <p class="page-hero-tag">From Our Kitchen</p>
+    <h1 class="page-hero-title">The BakeryStore<br>Journal</h1>
+    <p class="page-hero-desc">Recipes, baking tips, stories from our kitchen, and everything bread. Written by the people who bake it.</p>
+  </div>
+</div>
+
+<div class="sections-wrap">
+
+  <!-- FEATURED ARTICLE -->
+  <section class="featured-section">
+    <div class="featured-inner">
+      <div class="featured-img">
+        🍞
+        <span class="featured-img-label">Featured</span>
+      </div>
+      <div class="featured-content">
+        <div class="article-meta">
+          <span class="article-cat">Baking Tips</span>
+          <span class="article-date">February 10, 2025</span>
+          <span class="article-read">· 8 min read</span>
+        </div>
+        <h2>The Secret to a Perfect Sourdough Crust: Everything We've Learned in 15 Years</h2>
+        <p>After thousands of loaves and more than a decade in the oven, we're sharing everything we know about achieving that elusive crackle — the crust that shatters just right when you slice through it.</p>
+        <div class="author-row">
+          <div class="author-ava">M</div>
+          <div class="author-info">
+            <strong>Maria Dupont</strong>
+            <span>Head Baker &amp; Co-founder</span>
+          </div>
+        </div>
+        <a href="#" class="btn-read" onclick="openModal('modal1');return false">Read Article →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MORE ARTICLES -->
+  <section class="blog-section">
+    <div class="blog-header">
+      <p class="section-tag">Latest Posts</p>
+      <h2 class="section-title">More from the Journal</h2>
+    </div>
+    <div class="blog-grid">
+
+      <!-- Article 2 -->
+      <div class="blog-card" onclick="openModal('modal2')">
+        <div class="blog-card-img bg2">🥐<span class="blog-cat">Recipes</span></div>
+        <div class="blog-card-body">
+          <div class="blog-card-meta"><span>January 22, 2025</span><span>· 5 min read</span></div>
+          <h3>How to Make Butter Croissants at Home (Step by Step)</h3>
+          <p>Laminated dough sounds intimidating, but with patience and cold butter, you can make bakery-quality croissants in your own kitchen.</p>
+          <div class="blog-card-footer">
+            <div class="blog-author"><div class="blog-author-ava">A</div><span>Aisha Kamara</span></div>
+            <button class="btn-read-sm">Read →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Article 3 -->
+      <div class="blog-card" onclick="openModal('modal3')">
+        <div class="blog-card-img bg3">🌾<span class="blog-cat">Sourcing</span></div>
+        <div class="blog-card-body">
+          <div class="blog-card-meta"><span>December 5, 2024</span><span>· 6 min read</span></div>
+          <h3>Why We Only Use Heritage Grain Flour — and Why It Matters</h3>
+          <p>Modern wheat has been engineered for yield, not flavour. We tell the story of the heritage mill we partner with, and why ancient grains make better bread.</p>
+          <div class="blog-card-footer">
+            <div class="blog-author"><div class="blog-author-ava">T</div><span>Thomas Brun</span></div>
+            <button class="btn-read-sm">Read →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Placeholder card -->
+      <div class="blog-card" style="opacity:.5;pointer-events:none">
+        <div class="blog-card-img" style="background:var(--gray);color:var(--text-muted);font-size:40px;">✍️</div>
+        <div class="blog-card-body">
+          <div class="blog-card-meta"><span>Coming soon</span></div>
+          <h3>More stories on the way...</h3>
+          <p>Subscribe to our newsletter to be the first to know when we publish.</p>
+          <div class="blog-card-footer"><div class="blog-author"><div class="blog-author-ava" style="background:var(--gray)">?</div><span style="color:var(--text-muted)">BakeryStore Team</span></div></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter-section">
+    <h2>Get Fresh Stories in Your Inbox</h2>
+    <p>New articles, seasonal recipes, and behind-the-scenes from the bakery — once a month, no spam.</p>
+    <div class="newsletter-form">
+      <input type="email" placeholder="Type your email..." />
+      <button onclick="this.textContent='✓ Subscribed!';this.style.background='#4caf50';setTimeout(()=>{this.textContent='Sign Up';this.style.background=''},3000)">Sign Up</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="logo" href="bakery-landing.html" style="display:inline-flex;margin-bottom:0">
+          <svg class="logo-icon" viewBox="0 0 40 40" fill="none"><circle cx="13" cy="16" r="7" fill="#F5B642"/><circle cx="20" cy="12" r="8" fill="#F5B642"/><circle cx="27" cy="16" r="7" fill="#F5B642"/><rect x="10" y="21" width="20" height="8" rx="1.5" fill="#F5B642"/><circle cx="13" cy="16" r="5.5" fill="#3A1800"/><circle cx="20" cy="12" r="6.5" fill="#3A1800"/><circle cx="27" cy="16" r="5.5" fill="#3A1800"/><rect x="11" y="22" width="18" height="6" rx="1" fill="#c8870a"/></svg>
+          <span class="logo-text"><strong>Bakery</strong><span>Store</span></span>
+        </a>
+        <p>Baked daily with love and the finest ingredients.</p>
+        <div class="footer-social">
+          <div class="footer-social-icon"><svg viewBox="0 0 24 24" fill="#fff"><path d="M22.46 5.93a8.7 8.7 0 0 1-2.49.68 4.34 4.34 0 0 0 1.9-2.4 8.65 8.65 0 0 1-2.75 1.05 4.33 4.33 0 0 0-7.38 3.95A12.3 12.3 0 0 1 2.8 4.79a4.33 4.33 0 0 0 1.34 5.79 4.3 4.3 0 0 1-1.96-.54v.05a4.33 4.33 0 0 0 3.47 4.24 4.35 4.35 0 0 1-1.95.07 4.33 4.33 0 0 0 4.04 3.01A8.69 8.69 0 0 1 2 19.54a12.27 12.27 0 0 0 6.64 1.95c7.97 0 12.33-6.6 12.33-12.33l-.01-.56a8.79 8.79 0 0 0 2.16-2.24l-.66-.43z"/></svg></div>
+          <div class="footer-social-icon"><svg viewBox="0 0 24 24" fill="#fff"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></div>
+          <div class="footer-social-icon"><svg viewBox="0 0 24 24" fill="#fff"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="#3A1800"/></svg></div>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Service</h5><ul><li><a href="#">FAQ</a></li><li><a href="#">Order Tracking</a></li><li><a href="#">Menu</a></li><li><a href="#">Gift Card</a></li></ul></div>
+      <div class="footer-col"><h5>Navigate</h5><ul><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact</a></li><li><a href="blog.html">Blog</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
+      <div class="footer-col"><h5>Follow Us</h5><ul><li><a href="#">Twitter</a></li><li><a href="#">Instagram</a></li><li><a href="#">Facebook</a></li><li><a href="#">YouTube</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>+44 07 2005 9187 · contact@bakerystore.com · 42 Baker Street, London</p>
+      <p>© BakeryStore 2025 · <a href="#">Privacy</a></p>
+    </div>
+  </footer>
+</div>
+
+<!-- ── ARTICLE MODALS ── -->
+
+<!-- Modal 1: Sourdough Crust -->
+<div class="modal-overlay" id="modal1" onclick="closeModalOutside(event, 'modal1')">
+  <div class="modal">
+    <div class="modal-close"><button onclick="closeModal('modal1')">✕</button></div>
+    <div class="modal-img bg1">🍞</div>
+    <div class="modal-body">
+      <div class="article-meta">
+        <span class="article-cat">Baking Tips</span>
+        <span class="article-date">February 10, 2025</span>
+        <span class="article-read">· 8 min read</span>
+      </div>
+      <h2>The Secret to a Perfect Sourdough Crust</h2>
+      <div class="author-row">
+        <div class="author-ava">M</div>
+        <div class="author-info"><strong>Maria Dupont</strong><span>Head Baker &amp; Co-founder</span></div>
+      </div>
+      <p>After fifteen years and more loaves than we could ever count, we've developed an almost obsessive relationship with the crust. Not just any crust — the kind that shatters when you slice it, that crackles as it cools on the rack, that makes the whole room smell of something ancient and good.</p>
+      <p>The secret, as with most things in bread, is not one thing. It's the combination of five or six small decisions that compound into something remarkable.</p>
+      <h3>1. Start with the right fermentation</h3>
+      <p>A crust gets its flavour from the crumb, not the other way around. If your fermentation is rushed or too warm, the acids that develop — lactic and acetic — won't have time to fully express themselves. We do a cold retard overnight in the fridge at 4°C. The dough develops slowly, the gluten relaxes, and by morning you have a loaf ready to form and bake.</p>
+      <h3>2. Steam in the first 20 minutes</h3>
+      <p>This is the single most impactful thing you can do at home. Steam keeps the surface of the dough moist during oven spring, allowing the loaf to expand fully before the crust sets. We use a Dutch oven — lid on for the first 20 minutes, lid off for the last 25. The result is a blistered, mahogany crust that you simply can't achieve without it.</p>
+      <h3>3. Let it cool completely</h3>
+      <p>We know. It's torture. But cutting into a loaf straight from the oven compresses the crumb and releases steam that should be working to finish the crust. Give it at least 45 minutes. An hour is better. The crust will crackle as it cools — that sound is the moisture escaping and the crust setting properly. Listen for it.</p>
+      <p>There's more — scoring technique, oven temperature, hydration levels — but master these three and you'll already be baking bread that surprises people. That's the whole point, really.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 2: Croissants -->
+<div class="modal-overlay" id="modal2" onclick="closeModalOutside(event, 'modal2')">
+  <div class="modal">
+    <div class="modal-close"><button onclick="closeModal('modal2')">✕</button></div>
+    <div class="modal-img bg2">🥐</div>
+    <div class="modal-body">
+      <div class="article-meta">
+        <span class="article-cat">Recipes</span>
+        <span class="article-date">January 22, 2025</span>
+        <span class="article-read">· 5 min read</span>
+      </div>
+      <h2>How to Make Butter Croissants at Home</h2>
+      <div class="author-row">
+        <div class="author-ava">A</div>
+        <div class="author-info"><strong>Aisha Kamara</strong><span>Pastry Chef</span></div>
+      </div>
+      <p>I'll be honest with you: croissants are a commitment. The lamination process — folding cold butter into dough again and again to create those paper-thin layers — takes two days and a cool kitchen. But when you pull a tray of perfectly golden, audibly crisp croissants from your own oven, it's one of the most satisfying things you can do in a kitchen.</p>
+      <h3>The Ingredients</h3>
+      <p>Everything starts with quality. Use European-style butter with at least 82% fat content — the extra fat is what makes lamination work. Your flour should be strong bread flour (around 12% protein) to handle the gluten development during folding. And your starter (or commercial yeast) should be fresh and active.</p>
+      <h3>Day 1: The Détrempe</h3>
+      <p>Mix your dough just until combined — you don't want full gluten development yet, because you'll be working the dough a lot more during lamination. Shape it into a rectangle, wrap it tightly, and refrigerate overnight. The cold rest is not optional.</p>
+      <h3>Day 2: Lamination</h3>
+      <p>Beat your cold butter into a thin, pliable sheet — the same temperature as the dough. Lock it into the dough and fold: three letter folds with 30-minute rests in the fridge between each. After your final fold, roll out and cut into triangles. Roll each one from base to tip, curving the ends inward. Prove at cool room temperature (18–20°C) until visibly puffy and slightly wobbly when you shake the tray. Then bake at 200°C with steam. Perfection awaits.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 3: Heritage Grain -->
+<div class="modal-overlay" id="modal3" onclick="closeModalOutside(event, 'modal3')">
+  <div class="modal">
+    <div class="modal-close"><button onclick="closeModal('modal3')">✕</button></div>
+    <div class="modal-img bg3">🌾</div>
+    <div class="modal-body">
+      <div class="article-meta">
+        <span class="article-cat">Sourcing</span>
+        <span class="article-date">December 5, 2024</span>
+        <span class="article-read">· 6 min read</span>
+      </div>
+      <h2>Why We Only Use Heritage Grain Flour</h2>
+      <div class="author-row">
+        <div class="author-ava">T</div>
+        <div class="author-info"><strong>Thomas Brun</strong><span>Co-founder &amp; Operations</span></div>
+      </div>
+      <p>In 2011, two years into running BakeryStore, I drove two hours north to visit a small mill that had been operating continuously since 1847. I expected to find a curiosity. What I found changed how we bake.</p>
+      <p>The miller, a quietly passionate man in his sixties, pulled open a paper sack and handed me a pinch of Einkorn flour. I pressed it between my fingers. It was warm, slightly sweet-smelling, almost nutty. Nothing like the bleached commodity flour we'd been using. I asked him what the difference was.</p>
+      <h3>What "Heritage" Actually Means</h3>
+      <p>Heritage or ancient grains — Einkorn, Emmer, Spelt, Rouge de Bordeaux — are wheat varieties that have been grown largely unchanged for hundreds or even thousands of years. They were never bred for high yield or shelf stability. They were bred for flavour, nutrition, and adaptability to their specific soil and climate.</p>
+      <p>Modern commercial wheat, by contrast, has been selected almost entirely for yield and gluten content. The result is flour that performs predictably at industrial scale, but lacks the complexity of older varieties. When you eat supermarket bread, you're often eating the crop designed for efficiency, not taste.</p>
+      <h3>What It Means for Our Bread</h3>
+      <p>Heritage flour has a lower gluten content than modern wheat, which means our doughs are more delicate. They require longer fermentation, gentler handling, and more attention. Our bakers have had to re-learn how to read a loaf. But the payoff is a bread with genuine depth — layers of nuttiness, natural sweetness, and an open crumb that you simply don't get from commodity flour.</p>
+      <p>We pay more for it. We always will. Good bread costs more to make than people expect, and we think that's a story worth telling.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+function openModal(id){
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(id){
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow='';
+}
+function closeModalOutside(e,id){
+  if(e.target===document.getElementById(id)) closeModal(id);
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape') document.querySelectorAll('.modal-overlay.open').forEach(m=>m.classList.remove('open'))});
+</script>
+
+</body>
+</html>
